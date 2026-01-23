@@ -1,0 +1,14 @@
+{
+  "name": "bitlab-wasm",
+  "version": "0.1.0",
+  "description": "Bitcoin WASM library for blockchain operations",
+  "private": true,
+  "scripts": {
+    "build:wasm": "wasm-pack build core --target web --release",
+    "build:wasm:dev": "wasm-pack build core --target web",
+    "test": "wasm-pack test core --headless --firefox"
+  },
+  "devDependencies": {
+    "wasm-pack": "0.13.0"
+  }
+}
