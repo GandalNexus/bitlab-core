@@ -9,6 +9,6 @@
     "test": "wasm-pack test core --headless --firefox"
   },
   "devDependencies": {
-    "wasm-pack": "0.13.0"
+    "wasm-pack": "0.14.0"
   }
 }
