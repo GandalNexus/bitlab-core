@@ -96,29 +96,50 @@ Provides encoding and logging utilities.
 
 ## Building
 
-### Development Build
+### Prerequisites
 
+1. Install Rust with rustup:
 ```bash
-npm run build:wasm:dev
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+source $HOME/.cargo/env
 ```
 
-Creates an unoptimized WASM module with debug symbols for development and testing.
-
-### Production Build
-
+2. Add WASM target:
 ```bash
-npm run build:wasm
+rustup target add wasm32-unknown-unknown
 ```
 
-Creates a highly optimized WASM module with aggressive size reduction and performance tuning. Recommended for deployment.
-
-### Running Tests
-
+3. Install wasm-bindgen-cli:
 ```bash
-npm test
+cargo install wasm-bindgen-cli
 ```
 
-Executes the test suite using wasm-pack with Firefox headless browser.
+### Build Commands
+
+#### Development Build
+```bash
+cargo build --target wasm32-unknown-unknown --manifest-path core/Cargo.toml
+wasm-bindgen core/target/wasm32-unknown-unknown/debug/bitlab_wasm.wasm --out-dir pkg --target web
+```
+
+#### Production Build
+```bash
+cargo build --target wasm32-unknown-unknown --release --manifest-path core/Cargo.toml
+wasm-bindgen core/target/wasm32-unknown-unknown/release/bitlab_wasm.wasm --out-dir pkg --target web
+```
+
+#### Run Tests
+```bash
+cargo test --manifest-path core/Cargo.toml
+```
+
+### Output Files
+
+After building, you'll find these files in the `pkg/` directory:
+- `bitlab_wasm.js` - JavaScript bindings
+- `bitlab_wasm_bg.wasm` - WebAssembly binary
+- `bitlab_wasm.d.ts` - TypeScript definitions
+- `bitlab_wasm_bg.wasm.d.ts` - WASM type definitions
 
 ## Installation
 
@@ -128,14 +149,10 @@ git clone <repository-url>
 cd bitlab-core
 ```
 
-2. Install dependencies:
+2. Build the WASM module:
 ```bash
-npm install
-```
-
-3. Build the WASM module:
-```bash
-npm run build:wasm
+cargo build --target wasm32-unknown-unknown --release --manifest-path core/Cargo.toml
+wasm-bindgen core/target/wasm32-unknown-unknown/release/bitlab_wasm.wasm --out-dir pkg --target web
 ```
 
 ## Quick Start
